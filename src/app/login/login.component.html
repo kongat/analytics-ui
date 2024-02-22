@@ -1,0 +1,26 @@
+<div class="login">
+  <img class="mx-auto logo" src="assets/logo.png" alt="Your Company">
+  <mat-card>
+    <mat-card-content>
+      <h2>Log In</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="mt-2">
+          <mat-label>Username</mat-label>
+          <input matInput id="username" name="username" type="text" formControlName="username">
+          <mat-error>
+            Please provide a valid username
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="mt-2">
+          <mat-label>Password</mat-label>
+          <input matInput id="password" name="password" type="password" formControlName="password">
+          <mat-error>
+            Please provide a valid password
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="mt-2" [disabled]="loginForm.invalid">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

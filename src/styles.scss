@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.error-snackbar{
+  margin-bottom: 25px !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+  --mdc-snackbar-container-color: #b91c1c !important;
+  --mat-snack-bar-button-color: white !important;
+}
+
+.success-snackbar{
+  margin-bottom: 25px !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+  --mdc-snackbar-container-color: #15803d !important;
+  --mat-snack-bar-button-color: white !important;
+}
+
+.ngx-charts-outer{
+  margin: auto !important;
+}
+
+

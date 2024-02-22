@@ -1,0 +1,36 @@
+mat-form-field {
+  display: block;
+}
+
+mat-card{
+  width:700px ;
+  max-width: 75%;
+  text-align: center;
+  margin: 3em auto;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 100vw;
+  height: 100vh;
+  background: #1b1e27
+}
+
+.mdc-button:disabled {
+  cursor: not-allowed !important;
+  pointer-events: unset !important;
+}
+
+.logo{
+    width: 500px;
+    max-width: 70%;
+}
+
+.mat-mdc-card {
+  border-radius: 20px;
+}
+
+
+

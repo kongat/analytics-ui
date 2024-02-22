@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <img class="mx-auto logo" src="assets/logo.png" alt="Your Company">
+    <span class="example-spacer"></span>
+    <span>{{user?.username}}</span>
+    <button mat-icon-button class="ms-2" [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="mt-5" id="horizontal-chart">
+  <ngx-charts-bar-horizontal
+  [view]="[1200, 500]"
+  [scheme]="'cool'"
+  [results]="dataForChart"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [xAxisTickFormatting]='formatPercent'
+  [xScaleMax]="100"
+  (select)="onSelect($event)"
+  style="fill: grey;">
+  <ng-template #tooltipTemplate let-model="model">
+    <h4 class="mt-2">{{model.name}}</h4>
+    <h4>{{model.value}}%</h4>
+  </ng-template>
+</ngx-charts-bar-horizontal>
+
+</div>
