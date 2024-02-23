@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     this.apiService.getRoot().subscribe(
       res => {
         console.log(res)
+        console.log(res)
       }
     )
   }
