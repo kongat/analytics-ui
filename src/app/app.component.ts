@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 import { ApiService } from './core/services/api.service';
-
+import { environment } from '../environments/environment'
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(environment)
     this.authService.isLoggedIn$.subscribe(res => {
       if(!res){
         this.router.navigate(['/login']);
