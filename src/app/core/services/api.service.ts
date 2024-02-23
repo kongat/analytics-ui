@@ -16,4 +16,8 @@ export class ApiService {
   getEmployees() {
     return this.http.get<any>(environment.baseUrl + 'api/employee');
   }
+
+  getRoot() {
+    return this.http.get<any>(environment.baseUrl);
+  }
 }

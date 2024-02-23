@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
+import { ApiService } from './core/services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
+    private apiService: ApiService,
     private router: Router){
   }
 
@@ -24,6 +26,12 @@ export class AppComponent implements OnInit {
         this.router.navigate(['/']);
       }
     })
+
+    this.apiService.getRoot().subscribe(
+      res => {
+        console.log(res)
+      }
+    )
   }
 
 }

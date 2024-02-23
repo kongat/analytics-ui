@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'tbd',
+  baseUrl: 'https://analytics-service-zrfe.onrender.com/',
   label:'prod'
 };
