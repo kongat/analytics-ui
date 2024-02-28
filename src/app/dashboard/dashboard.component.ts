@@ -1,62 +1,83 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from '../core/models/user.model';
 import { AuthService } from '../core/services/auth.service';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
 import { ApiService } from '../core/services/api.service';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LegendPosition, NgxChartsModule } from '@swimlane/ngx-charts';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule,NgxChartsModule],
+  imports: [NgxChartsModule,MatProgressSpinnerModule,MatCardModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
+  dataChart: ChartData[] = [];
+  avgPhysicalChart: Data[] = [{
+    name:"Avg. Physical Data",
+    value:0
+  }];
+  avgMentalChart: Data[] = [{
+    name:"Avg. Mental Data",
+    value:0
+  }];
+  loading: boolean;
+  below = LegendPosition.Below;
+  mentalScoreSum: number = 0;
+  physicalScoreSum: number = 0;
 
-  user: UserModel;
-  dataForChart: ChartData[] = [];
-
-  constructor(
-    private authService: AuthService,
-    private apiService: ApiService
-    ) {
-    }
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit(): void {
-    this.user = this.authService.user;
-    this.loadProducts()
+    this.loadEmployees()
   }
 
-  logout() {
-    this.authService.logout();
-  }
 
-  loadProducts(){
+  loadEmployees(){
+    this.loading = true;
     this.apiService.getEmployees().subscribe(
       res => {
-        this.dataForChart = res.data.map(
+        this.loading = false;
+        this.dataChart = res.map(
           e =>{
+
             let data: ChartData = {
               name: e.firstName + ' ' + e.lastName,
-              value: 0,
+              series: [
+                {
+                  name: "Physical",
+                  value:0
+                },
+                {
+                  name: "Mental",
+                  value:0
+                }
+              ],
               id: e.id
             };
             if (e.metrics.length > 0){
               let latest = e.metrics.reduce(function (r, a) {
                 return r.date > a.date ? r : a;
               });
-              data.value = latest.score
+              data.series[0].value= latest.physicalScore
+              data.series[1].value= latest.mentalScore
             }
+            this.physicalScoreSum += data.series[0].value;
+            this.mentalScoreSum += data.series[1].value;
+            console.log(this.mentalScoreSum)
+            console.log(this.physicalScoreSum)
+            this.avgPhysicalChart[0].value = Math.round(this.physicalScoreSum/res.length);
+            this.avgMentalChart[0].value = Math.round(this.mentalScoreSum/res.length);
             return data
           }
         )
       },
       err =>{
         console.log(err)
+        this.loading = false;
       }
     );
   }
@@ -82,11 +103,24 @@ export class DashboardComponent implements OnInit {
       return val
     }
   }
+
+  test(){
+    let test = this.dataChart
+    test[0].series[0].value =10;
+    this.dataChart = [...test]
+    console.log(this.dataChart)
+  }
 }
 
 export interface ChartData {
   name: string,
-  value: number,
+  series: Data[]
   id: string
 }
+
+export interface Data {
+  name: string,
+  value: number
+}
+
 

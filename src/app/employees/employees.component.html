@@ -1,0 +1,86 @@
+<div class="p-5 m-2">
+  <mat-card>
+    <mat-card-header class="title">
+      <mat-card-title>Employee Management</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  @if (!loading && employeeList.length > 0) {
+    <table mat-table [dataSource]="employeeList" [trackBy]="trackByFn" class="mat-elevation-z8 mt-4">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element">
+
+            <mat-chip [ngClass]="element.status == 'ACTIVE' ? 'active' : 'offline'"class="active">{{element.status}}</mat-chip>
+
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="birthDate">
+        <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.birthDate | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef> Gender </th>
+        <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastPhysicalMetric">
+        <th mat-header-cell *matHeaderCellDef> Last Physical Metric </th>
+        <td mat-cell *matCellDef="let element">
+          @if(element.metrics.length > 0){
+            {{findLastMetric(element.metrics).physicalScore}}%
+          }@else{
+            -
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastMentalMetric">
+        <th mat-header-cell *matHeaderCellDef> Last Mental Metric </th>
+        <td mat-cell *matCellDef="let element">
+          @if(element.metrics.length > 0){
+            {{findLastMetric(element.metrics).mentalScore}}%
+          }@else{
+            -
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div class="mt-2">
+      <mat-paginator
+              [length]="length"
+              [pageSize]="pageSize"
+              [pageIndex]="pageIndex"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="handlePageEvent($event)"
+              aria-label="Select page">
+    </mat-paginator>
+    </div>
+
+  }@else {
+    <div class="d-flex justify-content-center mt-5">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+</div>
+

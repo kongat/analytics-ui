@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 import { ApiService } from './core/services/api.service';
-import { environment } from '../environments/environment'
+import { HeaderComponent } from './core/components/header/header.component';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,HeaderComponent,CommonModule ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -19,7 +21,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(environment)
     this.authService.isLoggedIn$.subscribe(res => {
       if(!res){
         this.router.navigate(['/login']);

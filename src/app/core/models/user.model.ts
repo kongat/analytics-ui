@@ -1,7 +1,7 @@
 export interface UserModel {
   username: string;
   id: string;
-  //createdAt: string;
+  createdAt: Date;
   // firstName: string;
-  // roles: string[];
+   roles: string[];
 }

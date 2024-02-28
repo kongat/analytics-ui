@@ -1,0 +1,22 @@
+<div class="">
+  <mat-card>
+    <mat-card-content>
+      <h2>Change Password</h2>
+      <form [formGroup]="changePassForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="mt-2">
+          <mat-label>Old Password</mat-label>
+          <input matInput id="oldPassword" name="oldPassword" type="password" formControlName="oldPassword">
+        </mat-form-field>
+        <mat-form-field class="mt-2">
+          <mat-label>New Password</mat-label>
+          <input matInput id="newPassword" name="newPassword" type="password" formControlName="newPassword">
+        </mat-form-field>
+        <mat-form-field class="mt-2">
+          <mat-label>Repeat New Password</mat-label>
+          <input matInput id="newPasswordRepeat" name="newPasswordRepeat" type="password" formControlName="newPasswordRepeat">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="mt-2" [disabled]="changePassForm.invalid">Submit</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

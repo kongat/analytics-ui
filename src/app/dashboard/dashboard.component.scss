@@ -1,27 +1,12 @@
-.example-spacer {
-  flex: 1 1 auto;
-}
-
-.logo{
-  max-width: 210px;
-}
-
-// ::ng-deep .ngx-charts{
-//     text{
-//       font-weight: bold;
-//     }
-// }
-
-// ::ng-deep .ngx-charts {
-//   g {
-//     color: red;
-//   }
-// }
-
-  .axis {
-  font-size: 16px;
-  font-weight: bold;
-  color: #3c0f0f; /* Your desired text color */
+.container{
+  height: 100%;
 }
 
 
+.avg-card-header {
+  padding: 6px 16px 0 !important;
+}
+
+.title{
+  padding: 12px !important;
+}

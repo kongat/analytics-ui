@@ -1,0 +1,29 @@
+.title{
+  padding: 12px !important;
+}
+
+td,th {
+  text-align: center;
+}
+
+.active{
+  background:#D6F5DB !important;
+  &.mat-mdc-standard-chip {
+    --mdc-chip-label-text-color:#14521F !important;
+  }
+}
+
+.offline{
+  background: #f18c8c !important;
+  &.mat-mdc-standard-chip {
+    --mdc-chip-label-text-color:#9c3a3a !important;
+  }
+}
+
+.mat-mdc-standard-chip {
+  --mdc-chip-label-text-weight: 500 !important;
+}
+
+
+
+
