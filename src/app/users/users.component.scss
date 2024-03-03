@@ -5,3 +5,22 @@
 td,th {
   text-align: center;
 }
+
+.primary{
+  background:#673ab7 !important;
+  &.mat-mdc-standard-chip {
+    --mdc-chip-label-text-color:#FFF !important;
+  }
+}
+
+.accent{
+  background: #ff4081 !important;
+  &.mat-mdc-standard-chip {
+    --mdc-chip-label-text-color:#FFF !important;
+  }
+}
+
+.spinner-row{
+  width:100% !important;
+  height: 20px !important;
+}

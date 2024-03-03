@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content class="mat-typography">
+  <form #employeeForm="ngForm">
+    <div>
+      <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input matInput [(ngModel)]="employee.firstName" name="firstName" required>
+        <mat-error>First Name is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input matInput [(ngModel)]="employee.lastName" name="lastName" required>
+        <mat-error>Last Name is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select [(ngModel)]="employee.gender" name="gender" required>
+          @for (gender of genders; track gender) {
+            <mat-option [value]="gender">{{gender}}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Gender is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Birth Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="employee.birthDate" name="birthDate" required>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>Birth Date is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>User Assignment</mat-label>
+        <mat-select [(ngModel)]="employee.userId" name="user" required>
+          @for (user of availableUsers; track user) {
+            <mat-option [value]="user.id">{{user.username}}</mat-option>
+          }
+        </mat-select>
+        <mat-error>User Assignment is required</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color="primary" (click)="closeDialog()" [disabled]="employeeForm.invalid" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+
+

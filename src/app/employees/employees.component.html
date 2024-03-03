@@ -4,7 +4,13 @@
       <mat-card-title>Employee Management</mat-card-title>
     </mat-card-header>
   </mat-card>
-  @if (!loading && employeeList.length > 0) {
+  <div class="d-flex justify-content-end mt-3">
+    <button mat-fab matTooltip="Add Employee" color="primary" (click)="openEmployeeDialog()" aria-label="Example mini fab with a heart icon">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  @if (!loading) {
+    @if(employeeList.length > 0){
     <table mat-table [dataSource]="employeeList" [trackBy]="trackByFn" class="mat-elevation-z8 mt-4">
 
       <!--- Note that these columns can be defined in any order.
@@ -26,14 +32,14 @@
         <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let element">
 
-            <mat-chip [ngClass]="element.status == 'ACTIVE' ? 'active' : 'offline'"class="active">{{element.status}}</mat-chip>
+            <mat-chip [ngClass]="element.status == 'ACTIVE' ? 'active' : 'offline'">{{element.status}}</mat-chip>
 
         </td>
       </ng-container>
 
       <ng-container matColumnDef="birthDate">
         <th mat-header-cell *matHeaderCellDef> Birth Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.birthDate | date: 'dd/MM/yyyy'}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.birthDate | date: 'MM/dd/yyyy'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="gender">
@@ -63,6 +69,28 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <div class="example-button-row">
+            <button mat-mini-fab matTooltip="Edit" (click)="openEmployeeDialog(element,i)"color="primary" aria-label="Example mini fab with a heart icon">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab matTooltip="Delete" (click)="openDeleteDialog(element.id,i)" color="warn" class="ms-2" aria-label="Example mini fab with a heart icon">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="spinner">
+        <th mat-header-cell *matHeaderCellDef style="width:60px;"></th>
+        <td mat-cell *matCellDef="let element;let i = index;">
+          <mat-spinner [ngClass]="rowLoading[i].loading ? 'd-block' :'d-none'" class="spinner-row"></mat-spinner>
+        </td>
+
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
@@ -76,6 +104,11 @@
               aria-label="Select page">
     </mat-paginator>
     </div>
+  }@else {
+    <h1 class="text-center">There are no registered Employees yet.</h1>
+  }
+
+
 
   }@else {
     <div class="d-flex justify-content-center mt-5">

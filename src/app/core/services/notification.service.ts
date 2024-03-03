@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NotificationComponent } from '../components/notification/notification.component';
+import { NotificationComponent } from '../../shared/components/notification/notification.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({

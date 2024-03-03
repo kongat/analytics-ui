@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChangePassComponent } from './change-pass.component';
+import { InfoDialogComponent } from './info-dialog.component';
 
-describe('ChangePassComponent', () => {
-  let component: ChangePassComponent;
-  let fixture: ComponentFixture<ChangePassComponent>;
+describe('InfoDialogComponent', () => {
+  let component: InfoDialogComponent;
+  let fixture: ComponentFixture<InfoDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChangePassComponent]
+      imports: [InfoDialogComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ChangePassComponent);
+    fixture = TestBed.createComponent(InfoDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

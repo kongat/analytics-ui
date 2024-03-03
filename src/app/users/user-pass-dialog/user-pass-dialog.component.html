@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Change User Pass</h2>
+<mat-dialog-content class="mat-typography">
+  <form #userForm="ngForm">
+    <div>
+      <mat-form-field>
+        <mat-label>New Password</mat-label>
+        <input matInput [(ngModel)]="changePassReq.newPassword" name="newPassword" type="password" required>
+        <mat-error>New Password is required</mat-error>
+
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Repeat New Password</mat-label>
+        <input matInput [(ngModel)]="changePassReq.newPasswordRepeat" name="newPasswordRepeat" type="password" required>
+        <mat-error>Repeat New Password is required</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color="primary" [mat-dialog-close]="changePassReq" [disabled]="userForm.invalid" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+
+

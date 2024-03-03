@@ -1,7 +1,11 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <img class="mx-auto logo" src="assets/logo.png"[routerLink]="['/dashboard']" ro alt="Your Company">
-    <span class="example-spacer"></span>
+    <img class="mx-auto logo" src="assets/logo.png"[routerLink]="['/dashboard']"  alt="Your Company">
+    <div class="example-spacer d-flex mx-5">
+      <a class="nav-item mx-3" [routerLink]="['/dashboard']" routerLinkActive="active-link">Dashboard</a>
+      <a class="nav-item mx-3" [routerLink]="['/employees']" routerLinkActive="active-link">Employees</a>
+      <a class="nav-item mx-3" [routerLink]="['/users']" routerLinkActive="active-link">Users</a>
+    </div>
     <span class="username">{{user?.username}}</span>
     <button mat-icon-button class="ms-2" [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>

@@ -4,52 +4,81 @@
       <mat-card-title>User Management</mat-card-title>
     </mat-card-header>
   </mat-card>
-  @if (!loading && usersList.length > 0){
-    <table mat-table  [dataSource]="usersList" [trackBy]="trackByFn" class="mat-elevation-z8 mt-4">
+  <div class="d-flex justify-content-end mt-3">
+    <button mat-fab matTooltip="Add User" color="primary" (click)="openUserDialog()" aria-label="Example mini fab with a heart icon">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  @if (!loading){
+    @if(usersList.length > 0){
+      <table mat-table  [dataSource]="usersList" [trackBy]="trackByFn" class="mat-elevation-z8 mt-3">
 
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef> Username </th>
-        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-      </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> Username </th>
+          <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef> Created At </th>
-        <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy'}} </td>
-      </ng-container>
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef> Role </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip [ngClass]="{primary: element.role == 'ADMIN', accent: element.role == 'MANAGER'}">{{element.role}}</mat-chip>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="roles">
-        <th mat-header-cell *matHeaderCellDef> Roles </th>
-        <td mat-cell *matCellDef="let element">
-          <ul>
-            @for( role of element.roles; track role){
-              <li>
-                {{role}}
-              </li>
-            } @empty {
-              <span>No roles assinged.</span>
+        <!-- Name Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef> Created At </th>
+          <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'MM/dd/yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element;let i = index">
+            <div class="example-button-row">
+              <button mat-mini-fab matTooltip="Edit" (click)="openUserDialog(element,i)" color="primary" aria-label="Example mini fab with a heart icon">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab matTooltip="Change Password" (click)="openUserPassDialog(element,i)" class="mx-2" color="accent" aria-label="Example mini fab with a heart icon">
+                <mat-icon>vpn_key</mat-icon>
+              </button>
+              <button mat-mini-fab matTooltip="Delete" color="warn" (click)="openDeleteDialog(element.id,i)" aria-label="Example mini fab with a heart icon">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="spinner">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element;let i = index;">
+            @if(rowLoading[i].loading){
+              <mat-spinner class="spinner-row"></mat-spinner>
             }
-          </ul>
-        </td>
-      </ng-container>
+          </td>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <div class="mt-2">
-      <mat-paginator
-              [length]="length"
-              [pageSize]="pageSize"
-              [pageIndex]="pageIndex"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              (page)="handlePageEvent($event)"
-              aria-label="Select page">
-    </mat-paginator>
-    </div>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div class="mt-2">
+        <mat-paginator
+                [length]="length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="handlePageEvent($event)"
+                aria-label="Select page">
+      </mat-paginator>
+      </div>
+    }@else {
+      <h1 class="text-center">There are no registered Users yet.</h1>
+    }
+
   }@else{
     <div class="d-flex justify-content-center mt-5">
       <mat-spinner></mat-spinner>

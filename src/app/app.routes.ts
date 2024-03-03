@@ -8,8 +8,8 @@ export const routes: Routes = [
   },
   {
     path: 'change-pass',
-    loadComponent: () => import('./change-pass/change-pass.component')
-      .then(c => c.ChangePassComponent)
+    loadComponent: () => import('./change-my-pass/change-my-pass.component')
+      .then(c => c.ChangeMyPassComponent)
   },
   {
     path: 'users',

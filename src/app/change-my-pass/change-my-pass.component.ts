@@ -6,20 +6,24 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthService } from '../core/services/auth.service';
 import { NotificationService } from '../core/services/notification.service';
 import { ApiService } from '../core/services/api.service';
+import { UserModel } from '../core/models/user.model';
 
 @Component({
-  selector: 'app-change-pass',
+  selector: 'app-my-change-pass',
   standalone: true,
   imports: [MatInputModule, MatCardModule, MatButtonModule,ReactiveFormsModule],
-  templateUrl: './change-pass.component.html',
-  styleUrl: './change-pass.component.scss'
+  templateUrl: './change-my-pass.component.html',
+  styleUrl: './change-my-pass.component.scss'
 })
-export class ChangePassComponent {
-
+export class ChangeMyPassComponent {
+  user: UserModel;
   constructor(
     private apiService: ApiService,
     private notificationService: NotificationService,
-  ){}
+
+  ){
+
+  }
 
   changePassForm = new FormGroup({
     oldPassword: new FormControl(null, Validators.required),
@@ -30,7 +34,7 @@ export class ChangePassComponent {
   onSubmit(){
     if (this.changePassForm.controls['oldPassword'].value && this.changePassForm.controls['newPassword'].value && this.changePassForm.controls['newPasswordRepeat'].value){
       this.apiService
-        .changePass(this.changePassForm.controls['oldPassword'].value, this.changePassForm.controls['newPassword'].value, this.changePassForm.controls['newPasswordRepeat'].value)
+        .changeMyPass(this.changePassForm.controls['oldPassword'].value, this.changePassForm.controls['newPassword'].value, this.changePassForm.controls['newPasswordRepeat'].value)
         .subscribe((response) => {
           this.notificationService.success('Password was updated successfully.');
         },
