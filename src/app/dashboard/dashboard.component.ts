@@ -27,6 +27,12 @@ export class DashboardComponent implements OnInit {
   below = LegendPosition.Below;
   mentalScoreSum: number = 0;
   physicalScoreSum: number = 0;
+  colorScheme: Color = {
+    name: 'myScheme',
+    selectable: true,
+    group: ScaleType.Linear,
+    domain: ['#7aa3e5'],
+  };
 
   constructor(private apiService: ApiService) {
   }

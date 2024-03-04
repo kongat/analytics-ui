@@ -48,6 +48,8 @@
               [scheme]="'cool'"
               [results]="avgPhysicalChart"
               [legend]="false"
+              [axisTickFormatting]='formatPercent'
+              [valueFormatting]='formatPercent'
             ></ngx-charts-gauge>
           </div>
         </mat-card-content>
@@ -61,9 +63,11 @@
           <div #containerRefAvgMental style="height: 100%;">
             <ngx-charts-gauge
 
-            [scheme]="'cool'"
+            [scheme]="colorScheme"
             [results]="avgMentalChart"
             [legend]="false"
+            [axisTickFormatting]='formatPercent'
+            [valueFormatting]='formatPercent'
           ></ngx-charts-gauge>
           </div>
         </mat-card-content>
