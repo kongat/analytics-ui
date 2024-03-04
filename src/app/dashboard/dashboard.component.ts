@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserModel } from '../core/models/user.model';
 import { AuthService } from '../core/services/auth.service';
 import { ApiService } from '../core/services/api.service';
-import { LegendPosition, NgxChartsModule } from '@swimlane/ngx-charts';
+import { Color, LegendPosition, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 
@@ -67,12 +67,13 @@ export class DashboardComponent implements OnInit {
             }
             this.physicalScoreSum += data.series[0].value;
             this.mentalScoreSum += data.series[1].value;
-            console.log(this.mentalScoreSum)
-            console.log(this.physicalScoreSum)
             this.avgPhysicalChart[0].value = Math.round(this.physicalScoreSum/res.length);
             this.avgMentalChart[0].value = Math.round(this.mentalScoreSum/res.length);
             return data
           }
+        )
+        this.dataChart.sort((firstEmployee, secondEmployee) =>
+          (firstEmployee.series[0].value + firstEmployee.series[1].value)/2 - (secondEmployee.series[0].value + secondEmployee.series[1].value)/2
         )
       },
       err =>{
@@ -122,5 +123,3 @@ export interface Data {
   name: string,
   value: number
 }
-
-
