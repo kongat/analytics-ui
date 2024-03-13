@@ -1,9 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+$CFA-asty-typography: mat.define-typography-config($font-family: 'CFAstyStd');
+@include mat.typography-hierarchy($CFA-asty-typography);
+$app-theme: mat.define-light-theme((
+  typography: $CFA-asty-typography
+));
+@include mat.all-component-themes($app-theme);
+
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
+@font-face {
+  font-family: 'CFAstyStd';
+  src: url('assets/fonts/CFAstyStd/CFAstyStd-Book.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CFAstyStd';
+  src: url('assets/fonts/CFAstyStd/CFAstyStd-Medium.otf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: CFAstyStd !important }
 
 .error-snackbar{
   margin-bottom: 25px !important;
@@ -23,4 +47,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin: auto !important;
 }
 
+.surface-200{
+  background: #002945 !important;
+}
+
+//Angula Material Overrides
+
+// .mat-toolbar,
+// .mat-mdc-menu-content,
+// .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text,
+// .mat-mdc-card-title,
+// .mat-mdc-row,
+// .mat-mdc-paginator,
+// .mat-mdc-standard-chip .mdc-evolution-chip__text-label,
+// .mat-mdc-tooltip .mdc-tooltip__surface,
+// .mat-mdc-header-row,
+// .mat-mdc-dialog-container .mdc-dialog__title,
+// .mat-mdc-button,
+// .mdc-text-field--filled .mdc-floating-label,
+// .mat-mdc-form-field-error,
+// .mat-mdc-dialog-container .mdc-dialog__content,
+// .mat-mdc-option   {
+//   font-family: CFAstyStd !important
+// }
 
