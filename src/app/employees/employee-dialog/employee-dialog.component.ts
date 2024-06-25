@@ -30,7 +30,8 @@ export class EmployeeDialogComponent implements OnInit{
     status: null,
     gender: null,
     metrics: [],
-    userId: null
+    userId: null,
+    emergency: null
   };
   genders: string[] = ['MALE','FEMALE','OTHER'];
   availableUsers: UserModel[]

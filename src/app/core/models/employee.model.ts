@@ -10,4 +10,5 @@ export interface EmployeeModel {
   status: 'ACTIVE' | 'OFFLINE';
   metrics: MetricModel[]
   userId: string;
+  emergency: string;
 }

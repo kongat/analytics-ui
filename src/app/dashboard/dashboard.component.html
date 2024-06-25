@@ -1,18 +1,161 @@
-<div class="p-5 m-2">
-  <mat-card>
-    <mat-card-header class="title">
-      <mat-card-title >Dashboard</mat-card-title>
-    </mat-card-header>
-  </mat-card>
+<div class="p-5 h-100 pageBg ">
+
+<h1 class="title">Dashboard</h1>
 
 <div class="mt-3">
 @if(!loading){
   <div class="row" style="height:68vh">
     <div class="col-sm-9">
-      <mat-card style="height: 100%;">
+      <mat-card style="height: 100%;" id="dash">
         <mat-card-content style="height: 100%;">
-          <div #containerRef style="height: 100%;" >
-           <ngx-charts-bar-horizontal-2d
+          <div  style="height: 100%;" >
+            <mat-tab-group>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div class="d-flex">
+                    <span class="warning"></span>
+                    <span>Warning</span>
+                  </div>
+                  <span>(3 Employees)</span>
+                </ng-template>
+                <table mat-table [dataSource]="employeeListWarning" class="mat-elevation-z8 mt-4">
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef> First Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <mat-chip [ngClass]="element.status == 'ACTIVE' ? 'active' : 'offline'">{{element.status}}</mat-chip>
+
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="healthStatus">
+                    <th mat-header-cell *matHeaderCellDef>Avg. Health Status </th>
+                    <td mat-cell *matCellDef="let element">
+
+                        {{findLastMetricAvg(element.metrics)}}%
+
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="room">
+                    <th mat-header-cell *matHeaderCellDef>Room</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        Room 1
+
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="emergency">
+                    <th mat-header-cell *matHeaderCellDef>Emergency</th>
+                    <td mat-cell *matCellDef="let element" [ngClass]="{'alert': element.emergency == 'Alert', 'passedOut' : element.emergency == 'Passed Out', 'normal' : element.emergency == 'Normal' }">
+                      {{element.emergency}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element">
+
+                      <button mat-mini-fab matTooltip="View" color="primary" (click)="openDashboardDialog(element,findLastMetric(element.metrics))">
+                        <mat-icon class="view-icon">info</mat-icon>
+                      </button>
+
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div class="d-flex">
+                    <span class="danger"></span>
+                    <span>Critical</span>
+                  </div>
+                  <span>(1 Employee)</span>
+                </ng-template>
+                <table mat-table [dataSource]="employeeListCritical" class="mat-elevation-z8 mt-4">
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef> First Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <mat-chip [ngClass]="element.status == 'ACTIVE' ? 'active' : 'offline'">{{element.status}}</mat-chip>
+
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="healthStatus">
+                    <th mat-header-cell *matHeaderCellDef>Avg. Health Status </th>
+                    <td mat-cell *matCellDef="let element">
+
+                      {{findLastMetricAvg(element.metrics)}}%
+
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="room">
+                    <th mat-header-cell *matHeaderCellDef>Room</th>
+                    <td mat-cell *matCellDef="let element">
+                        Room 3
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="emergency">
+                    <th mat-header-cell *matHeaderCellDef>Emergency</th>
+                    <td mat-cell *matCellDef="let element" [ngClass]="{'alert': element.emergency == 'Alert', 'passedOut' : element.emergency == 'Passed Out', 'normal' : element.emergency == 'Normal' }">
+                      {{element.emergency}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element">
+
+
+                      <button mat-mini-fab matTooltip="View" color="primary" (click)="openDashboardDialog(element,findLastMetric(element.metrics))">
+                        <mat-icon class="view-icon">info</mat-icon>
+                      </button>
+
+                    </td>
+                  </ng-container>
+
+
+
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </mat-tab>
+            </mat-tab-group>
+           <!-- <ngx-charts-bar-horizontal-2d
 
             [scheme]="'cool'"
             [results]="dataChart"
@@ -32,7 +175,7 @@
               <h4 class="mt-2">{{model.name}}</h4>
               <h4>{{model.value}}%</h4>
             </ng-template>
-          </ngx-charts-bar-horizontal-2d>
+          </ngx-charts-bar-horizontal-2d> -->
           </div>
         </mat-card-content>
       </mat-card>
@@ -43,9 +186,9 @@
           <mat-card-title>Average Physical Score</mat-card-title>
         </mat-card-header>
         <mat-card-content style="height: 100%;">
-          <div #containerRefAvgPhysical style="height: 100%;">
+          <div style="height: 100%;">
             <ngx-charts-gauge
-              [scheme]="'cool'"
+              [scheme]="colorScheme"
               [results]="avgPhysicalChart"
               [legend]="false"
               [axisTickFormatting]='formatPercent'
@@ -60,10 +203,10 @@
           <mat-card-title>Average Mental Score</mat-card-title>
         </mat-card-header>
         <mat-card-content style="height: 100%;">
-          <div #containerRefAvgMental style="height: 100%;">
+          <div style="height: 100%;">
             <ngx-charts-gauge
 
-            [scheme]="colorScheme"
+            [scheme]="'cool'"
             [results]="avgMentalChart"
             [legend]="false"
             [axisTickFormatting]='formatPercent'

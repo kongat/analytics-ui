@@ -27,7 +27,7 @@ $app-theme: mat.define-light-theme((
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: CFAstyStd !important }
+body { margin: 0; background: #00111C; font-family: CFAstyStd !important  }
 
 .error-snackbar{
   margin-bottom: 25px !important;
@@ -48,7 +48,19 @@ body { margin: 0; font-family: CFAstyStd !important }
 }
 
 .surface-200{
+  color: #002945 !important;
+}
+
+.back-surface-200{
   background: #002945 !important;
+}
+
+.neutral-hit-grey{
+  color: #ACAEB0 !important;
+}
+
+.back-neutral-hit-grey{
+  background: #ACAEB0 !important;
 }
 
 //Angula Material Overrides
@@ -71,3 +83,95 @@ body { margin: 0; font-family: CFAstyStd !important }
 //   font-family: CFAstyStd !important
 // }
 
+.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke:  #80E7FF !important;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+  border-color: white !important;
+}
+
+.mat-mdc-paginator-container{
+  color: white;
+  background: #001d32;
+}
+
+.mat-mdc-select{
+  color: white !important;
+}
+
+.mat-mdc-select-arrow{
+  color: white !important;
+}
+
+.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
+  color: var(--mat-select-focused-arrow-color) !important;
+}
+
+.mat-mdc-icon-button[disabled] .mat-mdc-paginator-icon {
+  fill: #00406C !important;
+}
+
+.mat-mdc-paginator-icon {
+  fill: white !important
+}
+
+.pageBg{
+  background-color: #001d32;
+}
+
+.gauge .gauge-tick text {
+  fill: #EBEBEB !important;
+}
+
+.gauge .gauge-tick path {
+  stroke: #EBEBEB !important;;
+}
+
+tspan{
+  fill: #EBEBEB !important;
+}
+
+.mat-mdc-tab-header{
+  background: #003356 !important;
+}
+
+.mat-mdc-tab .mdc-tab__text-label {
+  color: #fff !important;
+}
+
+.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #80e7ff !important;
+  font-weight: bold;
+}
+
+.mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
+  --mdc-tab-indicator-active-indicator-color: #80e7ff !important;
+  --mat-tab-header-active-label-text-color: #80e7ff !important;
+  --mat-tab-header-active-ripple-color: #80e7ff !important;
+  --mat-tab-header-inactive-ripple-color: #80e7ff !important;
+  --mat-tab-header-active-focus-label-text-color: #80e7ff !important;
+  --mat-tab-header-active-hover-label-text-color: #80e7ff !important;
+  --mat-tab-header-active-focus-indicator-color: #80e7ff !important;
+  --mat-tab-header-active-hover-indicator-color: #80e7ff !important;
+}
+
+
+
+.mdc-tab__content{
+  width: 100%;
+}
+
+.mdc-tab__text-label{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.mat-tab-active  {
+  background: red !important;
+}
+
+.mat-mdc-tab-body-wrapper {
+  padding: 1rem !important;
+}

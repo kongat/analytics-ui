@@ -10,6 +10,12 @@
 
 .username{
   font-size: medium;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #80E7FF;
+  text-align: center;
+  cursor: pointer;
 }
 
 .mat-toolbar{
@@ -25,11 +31,15 @@
   padding: 0.4rem 0.7rem;
   border-radius: 0.3rem;
   &:hover {
-    background:#193167;
+    background:#00406C !important;
+    color: #fff !important;
 }
 }
 
 .active-link {
-  background: #193167;
+  background: #00406C !important;
+  color: #2599FC !important;
 }
+
+
 
