@@ -115,7 +115,6 @@ export class DashboardComponent implements OnInit {
         )
       },
       err =>{
-        console.log(err)
         this.loading = false;
       }
     );
@@ -153,7 +152,7 @@ export class DashboardComponent implements OnInit {
    xAxisLabel: string = 'Health Score';
 
    onSelect(data): void {
-     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+
    }
 
    formatPercent(val) {
@@ -168,7 +167,6 @@ export class DashboardComponent implements OnInit {
     let test = this.dataChart
     test[0].series[0].value =10;
     this.dataChart = [...test]
-    console.log(this.dataChart)
   }
 
   findLastMetricAvg(metrics: MetricModel[]): number {
