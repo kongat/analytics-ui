@@ -20,7 +20,7 @@ export class HeaderComponent {
 
   constructor(private authService: AuthService){
     this.user = this.authService.user;
-    console.log(this.user)
+
   }
 
   logout() {

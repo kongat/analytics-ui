@@ -31,9 +31,7 @@ export class AuthService {
       tap((response: any) => {
         this._isLoggedIn$.next(true);
         localStorage.setItem(this.TOKEN_NAME, response.token);
-        this.user = this.getUser(response.token)
-        console.log(this.user)
-      })
+        this.user = this.getUser(response.token)      })
     );
   }
 
@@ -47,7 +45,6 @@ export class AuthService {
     if (!token) {
       return null
     }
-    console.log(JSON.parse(atob(token.split('.')[1])))
     return JSON.parse(atob(token.split('.')[1])) as UserModel;
   }
 }
