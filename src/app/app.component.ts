@@ -40,15 +40,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.apiService.getRoot().subscribe(
       res => {
-        console.log(res)
-        console.log(res)
+
       }
     )
 
     this.socketService.getMessage().subscribe((message: string) => {
-      console.log(message)
       this.messages.push(message);
-      console.log(this.messages)
     });
   }
 
