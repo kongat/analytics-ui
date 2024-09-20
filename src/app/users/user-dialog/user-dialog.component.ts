@@ -25,8 +25,9 @@ export class UserDialogComponent implements OnInit{
   };
   title: string;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data:UserModel){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data:UserModel){
 
+}
   ngOnInit(): void {
     this.user = this.data ? Object.assign({}, this.data) : this.user;
     this.title = this.user.userId ? 'Edit User' : 'Add User'
