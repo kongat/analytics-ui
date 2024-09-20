@@ -24,7 +24,7 @@ export class EmployeeDialogComponent implements OnInit{
   title: string;
   employee: EmployeeModel = {
     firstName: null,
-    id: null,
+    employeeId: null,
     lastName: null,
     birthDate: null,
     status: null,
@@ -42,8 +42,8 @@ export class EmployeeDialogComponent implements OnInit{
 
   ngOnInit(): void {
     this.employee = this.data.employee ? Object.assign({}, this.data.employee) : this.employee;
-    this.title = this.employee.id ? 'Edit Employee' : 'Add Employee';
-    this.availableUsers = this.data.usersEmployeeRole.filter(u => u.employee == null || u.id == this.employee.userId)
+    this.title = this.employee.employeeId ? 'Edit Employee' : 'Add Employee';
+    this.availableUsers = this.data.usersEmployeeRole.filter(u => u.employee == null || u.userId == this.employee.userId)
   }
 
 

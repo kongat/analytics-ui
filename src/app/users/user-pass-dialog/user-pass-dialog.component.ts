@@ -26,7 +26,7 @@ export class UserPassDialogComponent  implements OnInit{
   }
 
   ngOnInit(): void {
-    this.changePassReq.id = this.data.id;
+    this.changePassReq.id = this.data.userId;
 
   }
 }

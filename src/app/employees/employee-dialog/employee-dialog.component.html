@@ -42,7 +42,7 @@
         <mat-label>User Assignment</mat-label>
         <mat-select [(ngModel)]="employee.userId" name="user" required>
           @for (user of availableUsers; track user) {
-            <mat-option [value]="user.id">{{user.username}}</mat-option>
+            <mat-option [value]="user.userId">{{user.username}}</mat-option>
           }
         </mat-select>
         <mat-error>User Assignment is required</mat-error>

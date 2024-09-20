@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit, OnDestroy{
     .subscribe(
       res => {
         res.data.map(u => {
-          this.rowLoading.push({id: u.id,loading: false})
+          this.rowLoading.push({id: u.userId,loading: false})
         })
         this.loading = false;
         this.usersList = res.data;
@@ -94,7 +94,7 @@ export class UsersComponent implements OnInit, OnDestroy{
   }
 
   trackByFn(index: number, item: UserModel) {
-    return item.id;
+    return item.userId;
   }
 
   ngOnDestroy(): void {
@@ -111,7 +111,7 @@ export class UsersComponent implements OnInit, OnDestroy{
 
     dialogRef.afterClosed().subscribe((result:UserModel) => {
       if(result){
-        result.id ? this.updateUser(result,index) : this.createUser(result);
+        result.userId ? this.updateUser(result,index) : this.createUser(result);
       }
     });
 

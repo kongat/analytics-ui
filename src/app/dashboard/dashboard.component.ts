@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
                   value:0
                 }
               ],
-              id: e.id
+              id: e.employeeId
             };
             if (e.metrics.length > 0){
               let latest = e.metrics.reduce(function (r, a) {

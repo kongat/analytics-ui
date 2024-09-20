@@ -33,7 +33,6 @@ export class EmployeesComponent implements OnInit, OnDestroy{
   pageIndex: number = 0;
   length: number = 0;
   loading: boolean = false;
-  employees$: Observable<EmployeeModel[]>;
   usersEmployeeRole: UserModel[];
   employeeList: EmployeeModel[];
   displayedColumns: string[] = ['firstName','lastName','status','birthDate','gender','lastPhysicalMetric','lastMentalMetric','actions','spinner'];
@@ -47,9 +46,6 @@ export class EmployeesComponent implements OnInit, OnDestroy{
     this.getUserEmployeeRole()
   }
 
-  loadEmployees(){
-    this.employees$ = this.apiService.getEmployees()
-  }
 
   loadEmployeesPageable(page: number, size: number, previousAction: 'initial' | 'edit' | 'create' | 'delete',index?: number){
     this.loading = previousAction == 'initial' ? true : false;
@@ -58,7 +54,7 @@ export class EmployeesComponent implements OnInit, OnDestroy{
     .subscribe(
       res => {
         res.data.map(u => {
-          this.rowLoading.push({id: u.id,loading: false})
+          this.rowLoading.push({id: u.employeeId,loading: false})
         })
         this.loading = false;
         this.employeeList = res.data;
@@ -104,7 +100,7 @@ export class EmployeesComponent implements OnInit, OnDestroy{
   }
 
   trackByFn(index: number, item: EmployeeModel) {
-    return item.id;
+    return item.employeeId;
   }
 
   ngOnDestroy(): void {
@@ -122,7 +118,7 @@ export class EmployeesComponent implements OnInit, OnDestroy{
 
     dialogRef.afterClosed().subscribe((result:EmployeeModel) => {
       if(result){
-        result.id ? this.updateEmployee(result,index) : this.createEmployee(result);
+        result.employeeId ? this.updateEmployee(result,index) : this.createEmployee(result);
       }
     });
 

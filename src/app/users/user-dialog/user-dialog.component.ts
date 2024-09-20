@@ -17,7 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 export class UserDialogComponent implements OnInit{
   roles: string[] = ["ADMIN","EMPLOYEE","MANAGER"]
   user:UserModel = {
-    id: null,
+    userId: null,
     role: null,
     createdAt: null,
     username: null,
@@ -30,7 +30,7 @@ export class UserDialogComponent implements OnInit{
   }
   ngOnInit(): void {
     this.user = this.data ? Object.assign({}, this.data) : this.user;
-    this.title = this.user.id ? 'Edit User' : 'Add User'
+    this.title = this.user.userId ? 'Edit User' : 'Add User'
   }
 
 }

@@ -2,7 +2,7 @@ import {  MetricModel } from "./metric.model";
 import { UserModel } from "./user.model";
 
 export interface EmployeeModel {
-  id: string
+  employeeId: string
   firstName: string;
   lastName: string;
   birthDate: string;
