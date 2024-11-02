@@ -5,6 +5,8 @@ import { ApiService } from './core/services/api.service';
 import { HeaderComponent } from './core/components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { SocketService } from './core/services/socket.service';
+import { NotificationService } from './core/services/notification.service';
+import { EmployeeModel } from './core/models/employee.model';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private apiService: ApiService,
     private socketService: SocketService,
+    private notificationService: NotificationService,
     private router: Router){
       this.socketService.setupSocketConnection()
   }
@@ -38,14 +41,14 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.apiService.getRoot().subscribe(
-      res => {
+    this.socketService.getSosMessage().subscribe((employee: EmployeeModel) => {
+      this.notificationService.warn(employee.firstName + " "+ employee.lastName +' '+'needs help.');
+      //this.messages.push(message);
+    });
 
-      }
-    )
-
-    this.socketService.getMessage().subscribe((message: string) => {
-      this.messages.push(message);
+    this.socketService.getPassoutMessage().subscribe((employee: EmployeeModel) => {
+      this.notificationService.error(employee.firstName + " "+ employee.lastName +' '+'has passed out.');
+      //this.messages.push(message);
     });
   }
 

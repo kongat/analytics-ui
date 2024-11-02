@@ -17,11 +17,15 @@ export class NotificationService {
     this.openSnackBar(message, '', 'error-snackbar');
   }
 
+  warn(message: string) {
+    this.openSnackBar(message, '', 'warn-snackbar');
+  }
+
   openSnackBar(
     message: string,
     action: string,
     className = '',
-    duration = 3000
+    duration = 10000
   ) {
     this.snackBar.openFromComponent(NotificationComponent,{
       duration: duration,

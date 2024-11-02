@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadEmployees()
+    this.loadEmployees();
   }
 
 
@@ -106,10 +106,10 @@ export class DashboardComponent implements OnInit {
             return data
           }
         )
-        this.employeeListWarning[0].emergency = 'Alert'
-        this.employeeListWarning[1].emergency = '-'
-        this.employeeListWarning[2].emergency = '-'
-        this.employeeListCritical[0].emergency = 'Passed Out'
+        // this.employeeListWarning[0].emergency = 'Alert'
+        // this.employeeListWarning[1].emergency = '-'
+        // this.employeeListWarning[2].emergency = '-'
+        //this.employeeListCritical[0].emergency = 'Passed Out'
         this.dataChart.sort((firstEmployee, secondEmployee) =>
           (firstEmployee.series[0].value + firstEmployee.series[1].value)/2 - (secondEmployee.series[0].value + secondEmployee.series[1].value)/2
         )

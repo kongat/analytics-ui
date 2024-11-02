@@ -43,6 +43,13 @@ body { margin: 0; background: #00111C; font-family: CFAstyStd !important  }
   --mat-snack-bar-button-color: white !important;
 }
 
+.warn-snackbar{
+  margin-bottom: 25px !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+  --mdc-snackbar-container-color: #d2b408 !important;
+  --mat-snack-bar-button-color: white !important;
+}
+
 .ngx-charts-outer{
   margin: auto !important;
 }
