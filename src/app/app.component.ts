@@ -52,12 +52,13 @@ export class AppComponent implements OnInit, OnDestroy {
     })
 
     this.notificationService.notificationEvent$.subscribe(
-      res => ({
+      res => {
+        console.log(res)
         if(res){
           this.openNotificationModal(res)
         }
       }
-    ))
+    )
 
     this.socketService.getSosMessage().subscribe((sosEvent: SosEvent) => {
       const notificationEvent: NotificationEvent = {
