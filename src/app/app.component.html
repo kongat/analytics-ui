@@ -1,4 +1,8 @@
-<app-header *ngIf="authService.isLoggedIn$ | async"></app-header>
+<app-header
+    *ngIf="authService.isLoggedIn$ | async"
+    [notificationEvents]="notificationEvents"
+    (eventToResolve)="openNotificationModal($event)"
+></app-header>
 <div class="main p-5">
   <router-outlet/>
 </div>

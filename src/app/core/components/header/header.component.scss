@@ -8,7 +8,7 @@
 }
 
 
-.username{
+.header-icon{
   font-size: medium;
   border-radius: 50%;
   width: 30px;
@@ -41,5 +41,32 @@
   color: #2599FC !important;
 }
 
+.notification-icon{
+  margin-right: 20px;
+}
 
+::ng-deep.mat-mdc-menu-panel {
+  max-width: none !important;
+}
+
+.warning{
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: #FFFF5C;
+  margin-right: 7px;
+}
+
+.danger{
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: #F41515;
+  margin-right: 7px;
+}
+
+.date{
+  font-size: 14px;
+  font-weight: 500;
+}
 

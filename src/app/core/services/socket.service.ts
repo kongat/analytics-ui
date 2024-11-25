@@ -3,6 +3,8 @@ import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { EmployeeModel } from '../models/employee.model';
+import { PassoutEvent } from '../models/passout-event.model';
+import { SosEvent } from '../models/sos-event.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +26,9 @@ export class SocketService {
     }
   }
 
-  public getSosMessage(): Observable<EmployeeModel> {
+  public getSosMessage(): Observable<SosEvent> {
     console.log("reeees")
-    return new Observable<EmployeeModel>((observer) => {
+    return new Observable<SosEvent>((observer) => {
       this.socket.on('sos', (data) => {
         console.log(data)
         observer.next(data.data);
@@ -34,8 +36,8 @@ export class SocketService {
     });
   }
 
-  public getPassoutMessage(): Observable<EmployeeModel> {
-    return new Observable<EmployeeModel>((observer) => {
+  public getPassoutMessage(): Observable<PassoutEvent> {
+    return new Observable<PassoutEvent>((observer) => {
       this.socket.on('passout', (data) => {
         console.log(data.data)
         observer.next(data.data);

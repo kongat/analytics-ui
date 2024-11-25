@@ -5,6 +5,9 @@ import { EmployeeModel } from '../models/employee.model';
 import { UserModel } from '../models/user.model';
 import {  map } from 'rxjs';
 import {  delay } from 'rxjs/operators';
+import { SosEvent } from '../models/sos-event.model';
+import { PassoutEvent } from '../models/passout-event.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +18,30 @@ export class ApiService {
 
   login(username: string, password: string) {
     return this.http.post(environment.baseUrl + 'signin', { username, password });
+  }
+
+  updatePassoutEvent(dto: PassoutEvent) {
+    return this.http.put<Result<PassoutEvent>>(environment.baseUrl + 'api/passout',dto).pipe(
+      map(res => res.data)
+    );
+  }
+
+  updateSosEvent(dto: PassoutEvent) {
+    return this.http.put<Result<PassoutEvent>>(environment.baseUrl + 'api/sos',dto).pipe(
+      map(res => res.data)
+    );
+  }
+
+  getUnresolvedSosEvents() {
+    return this.http.get<Result<SosEvent[]>>(environment.baseUrl + 'api/sos').pipe(
+      map(res => res.data)
+    );
+  }
+
+  getUnresolvedPassoutEvents() {
+    return this.http.get<Result<PassoutEvent[]>>(environment.baseUrl + 'api/passout').pipe(
+      map(res => res.data)
+    );
   }
 
   getEmployees() {

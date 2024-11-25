@@ -6,7 +6,35 @@
       <a class="nav-item mx-3 neutral-hit-grey" [routerLink]="['/employees']" routerLinkActive="active-link">Employees</a>
       <a class="nav-item mx-3 neutral-hit-grey" [routerLink]="['/users']" routerLinkActive="active-link">Users</a>
     </div>
-    <span class="username" [matMenuTriggerFor]="menu">{{user?.username[0].toUpperCase()}}</span>
+    <span class="header-icon notification-icon" [matMenuTriggerFor]="notificationsMenu">
+      <mat-icon [matBadge]="notificationEvents.length ? notificationEvents.length : 0">notifications</mat-icon>
+    </span>
+    <mat-menu #notificationsMenu="matMenu">
+      <mat-list role="list">
+        @for(event of notificationEvents; track $index;){
+          <button mat-menu-item (click)="resolveEvent(event)" >
+            <div >
+              <div class="d-flex align-items-center p-2">
+                <div class="danger" *ngIf="event.type == 'passout'"></div>
+                <div class="warning" *ngIf="event.type == 'sos'"></div>
+                <div>
+                  <div>{{event.data.Employee.firstName}} {{event.data.Employee.lastName}}
+                    <span *ngIf="event.type == 'passout'">has passed out.</span>
+                    <span *ngIf="event.type == 'sos'">needs help.</span>
+                  </div>
+                  <div class="date">{{event.data.createdAt | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </button>
+        }
+      </mat-list>
+    </mat-menu>
+    <span class="header-icon" [matMenuTriggerFor]="menu">{{user?.username[0].toUpperCase()}}</span>
     <!-- <button mat-icon-button class="ms-2" [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button> -->
