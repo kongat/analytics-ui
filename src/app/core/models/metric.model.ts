@@ -1,6 +1,6 @@
 export interface MetricModel{
-  id: string;
+  createdAt: Date;
   mentalScore: number;
   physicalScore: number;
-  date: Date;
+  employeeId: string;
 }

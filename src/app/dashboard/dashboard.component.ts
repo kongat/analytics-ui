@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class DashboardComponent implements OnInit {
   private unsubscribe$: Subject<void> = new Subject<void>();
-  displayedColumns: string[] = ['firstName','lastName','status','healthStatus','room','emergency','view'];
+  displayedColumns: string[] = ['firstName','lastName','status','healthStatus','metricDate',];
   employeeList: EmployeeModel[];
   employeeListWarning: EmployeeModel[] =[];
   employeeListCritical: EmployeeModel[]=[];
@@ -88,8 +88,9 @@ export class DashboardComponent implements OnInit {
               id: e.employeeId
             };
             if (e.metrics.length > 0){
-              let latest = e.metrics.reduce(function (r, a) {
-                return r.date > a.date ? r : a;
+              let metricWithValues = e.metrics.filter(m => m.mentalScore !== null && m.physicalScore !== null)
+              let latest = metricWithValues.reduce(function (r, a) {
+                return r.createdAt > a.createdAt ? r : a;
               });
               if ((latest.mentalScore + latest.physicalScore)/2 < 60){
                 this.employeeListCritical.push(e)
@@ -127,19 +128,19 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  loadEmployeesPageable(page: number, size: number){
-    this.apiService.getEmployeesPageable(page,size)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      res => {
-        this.loading = false;
-        this.employeeList = res.data;
-       },
-      err => {
-        this.loading = false;
-      }
-    )
-  }
+  // loadEmployeesPageable(page: number, size: number){
+  //   this.apiService.getEmployeesPageable(page,size)
+  //   .pipe(takeUntil(this.unsubscribe$))
+  //   .subscribe(
+  //     res => {
+  //       this.loading = false;
+  //       this.employeeList = res.data;
+  //      },
+  //     err => {
+  //       this.loading = false;
+  //     }
+  //   )
+  // }
 
    // options
    showXAxis: boolean = true;
@@ -170,15 +171,17 @@ export class DashboardComponent implements OnInit {
   }
 
   findLastMetricAvg(metrics: MetricModel[]): number {
-    let latest = metrics.reduce(function (r, a) {
-      return r.date > a.date ? r : a;
+    let metricWithValues = metrics.filter(m => m.mentalScore !== null && m.physicalScore !== null)
+    let latest = metricWithValues.reduce(function (r, a) {
+      return r.createdAt > a.createdAt ? r : a;
     });
     return Math.round(latest.mentalScore + latest.physicalScore)/2;
   }
 
   findLastMetric(metrics: MetricModel[]): MetricModel {
-    let latest = metrics.reduce(function (r, a) {
-      return r.date > a.date ? r : a;
+    let metricWithValues = metrics.filter(m => m.mentalScore !== null && m.physicalScore !== null)
+    let latest = metricWithValues.reduce(function (r, a) {
+      return r.createdAt > a.createdAt ? r : a;
     });
     return latest;
   }
