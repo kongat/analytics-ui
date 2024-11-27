@@ -86,7 +86,7 @@ export class EmployeesComponent implements OnInit, OnDestroy{
   }
 
   findLastMetric(metrics: MetricModel[]): MetricModel {
-      let metricWithValues = metrics.filter(m => m.mentalScore !== null && m.physicalScore !== null)
+      let metricWithValues = metrics.filter(m => m.physicalScore !== null)
       let latest = metricWithValues.reduce(function (r, a) {
         return r.createdAt > a.createdAt ? r : a;
       });
