@@ -19,8 +19,8 @@
                 <div class="warning" *ngIf="event.type == 'sos'"></div>
                 <div>
                   <div>{{event.data.Employee.firstName}} {{event.data.Employee.lastName}}
-                    <span *ngIf="event.type == 'passout'">has passed out.</span>
-                    <span *ngIf="event.type == 'sos'">needs help.</span>
+                    <span *ngIf="event.type == 'passout'"> : POSSIBLE ACCIDENT</span>
+                    <span *ngIf="event.type == 'sos'"> : SOS</span>
                   </div>
                   <div class="date">{{event.data.createdAt | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
                 </div>
