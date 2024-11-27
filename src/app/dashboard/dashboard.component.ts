@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit {
   employeeList: EmployeeModel[];
   employeeListWarning: EmployeeModel[] =[];
   employeeListCritical: EmployeeModel[]=[];
+  employeeListNormal: EmployeeModel[]=[];
   dataChart: ChartData[] = [];
   avgPhysicalChart: Data[] = [{
     name:"Avg. Physical Data",
@@ -88,14 +89,16 @@ export class DashboardComponent implements OnInit {
               id: e.employeeId
             };
             if (e.metrics.length > 0){
-              let metricWithValues = e.metrics.filter(m => m.mentalScore !== null && m.physicalScore !== null)
+              let metricWithValues = e.metrics.filter(m => m.physicalScore !== null)
               let latest = metricWithValues.reduce(function (r, a) {
                 return r.createdAt > a.createdAt ? r : a;
               });
-              if ((latest.mentalScore + latest.physicalScore)/2 < 60){
-                this.employeeListCritical.push(e)
-              }else{
+              if (latest.physicalScore <= 6){
+                this.employeeListNormal.push(e)
+              }else if (latest.physicalScore <= 8){
                 this.employeeListWarning.push(e)
+              }else{
+                this.employeeListCritical.push(e)
               }
               data.series[0].value= latest.physicalScore
               data.series[1].value= latest.mentalScore
@@ -171,7 +174,7 @@ export class DashboardComponent implements OnInit {
   }
 
   findLastMetricAvg(metrics: MetricModel[]): number {
-    let metricWithValues = metrics.filter(m => m.mentalScore !== null && m.physicalScore !== null)
+    let metricWithValues = metrics.filter(m =>  m.physicalScore !== null)
     let latest = metricWithValues.reduce(function (r, a) {
       return r.createdAt > a.createdAt ? r : a;
     });
@@ -179,7 +182,7 @@ export class DashboardComponent implements OnInit {
   }
 
   findLastMetric(metrics: MetricModel[]): MetricModel {
-    let metricWithValues = metrics.filter(m => m.mentalScore !== null && m.physicalScore !== null)
+    let metricWithValues = metrics.filter(m => m.physicalScore !== null)
     let latest = metricWithValues.reduce(function (r, a) {
       return r.createdAt > a.createdAt ? r : a;
     });
