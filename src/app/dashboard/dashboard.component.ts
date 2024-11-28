@@ -30,19 +30,19 @@ export class DashboardComponent implements OnInit {
   employeeListWarning: EmployeeModel[] =[];
   employeeListCritical: EmployeeModel[]=[];
   employeeListNormal: EmployeeModel[]=[];
-  dataChart: ChartData[] = [];
-  avgPhysicalChart: Data[] = [{
-    name:"Avg. Physical Data",
-    value:0
-  }];
-  avgMentalChart: Data[] = [{
-    name:"Avg. Mental Data",
-    value:0
-  }];
+  // dataChart: ChartData[] = [];
+  // avgPhysicalChart: Data[] = [{
+  //   name:"Avg. Physical Data",
+  //   value:0
+  // }];
+  // avgMentalChart: Data[] = [{
+  //   name:"Avg. Mental Data",
+  //   value:0
+  // }];
   loading: boolean;
   below = LegendPosition.Below;
-  mentalScoreSum: number = 0;
-  physicalScoreSum: number = 0;
+  //mentalScoreSum: number = 0;
+  //physicalScoreSum: number = 0;
   colorScheme: Color = {
     name: 'myScheme',
     selectable: true,
@@ -71,52 +71,32 @@ export class DashboardComponent implements OnInit {
       res => {
         this.loading = false;
         this.employeeList = res;
-        this.dataChart = res.map(
+        res.map(
           e =>{
-
-            let data: ChartData = {
-              name: e.firstName + ' ' + e.lastName,
-              series: [
-                {
-                  name: "Physical",
-                  value:0
-                },
-                {
-                  name: "Mental",
-                  value:0
-                }
-              ],
-              id: e.employeeId
-            };
             if (e.metrics.length > 0){
               let metricWithValues = e.metrics.filter(m => m.physicalScore !== null)
-              let latest = metricWithValues.reduce(function (r, a) {
-                return r.createdAt > a.createdAt ? r : a;
-              });
-              if (latest.physicalScore <= 6){
-                this.employeeListNormal.push(e)
-              }else if (latest.physicalScore <= 8){
-                this.employeeListWarning.push(e)
-              }else{
-                this.employeeListCritical.push(e)
+              console.log(metricWithValues)
+              if (metricWithValues.length > 0){
+                let latest = metricWithValues.reduce(function (r, a) {
+                  return r.createdAt > a.createdAt ? r : a;
+                });
+                if (latest.physicalScore <= 6){
+                  this.employeeListNormal.push(e)
+                }else if (latest.physicalScore <= 8){
+                  this.employeeListWarning.push(e)
+                }else{
+                  this.employeeListCritical.push(e)
+                }
               }
-              data.series[0].value= latest.physicalScore
-              data.series[1].value= latest.mentalScore
+
             }
-            this.physicalScoreSum += data.series[0].value;
-            this.mentalScoreSum += data.series[1].value;
-            this.avgPhysicalChart[0].value = Math.round(this.physicalScoreSum/res.length);
-            this.avgMentalChart[0].value = Math.round(this.mentalScoreSum/res.length);
-            return data
           }
         )
         // this.employeeListWarning[0].emergency = 'Alert'
         // this.employeeListWarning[1].emergency = '-'
         // this.employeeListWarning[2].emergency = '-'
         //this.employeeListCritical[0].emergency = 'Passed Out'
-        this.dataChart.sort((firstEmployee, secondEmployee) =>
-          (firstEmployee.series[0].value + firstEmployee.series[1].value)/2 - (secondEmployee.series[0].value + secondEmployee.series[1].value)/2
-        )
+
       },
       err =>{
         this.loading = false;
@@ -168,9 +148,9 @@ export class DashboardComponent implements OnInit {
   }
 
   test(){
-    let test = this.dataChart
-    test[0].series[0].value =10;
-    this.dataChart = [...test]
+    //let test = this.dataChart
+    //test[0].series[0].value =10;
+    //this.dataChart = [...test]
   }
 
   findLastMetricAvg(metrics: MetricModel[]): number {

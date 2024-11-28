@@ -35,7 +35,7 @@ export class EmployeesComponent implements OnInit, OnDestroy{
   loading: boolean = false;
   usersEmployeeRole: UserModel[];
   employeeList: EmployeeModel[];
-  displayedColumns: string[] = ['firstName','lastName','status','birthDate','gender','lastPhysicalMetric','lastMentalMetric','actions','spinner'];
+  displayedColumns: string[] = ['firstName','lastName','status','birthDate','gender','actions','spinner'];
   rowLoading: {id: string, loading: boolean}[] = []
 
   constructor(private apiService: ApiService,public dialog: MatDialog, private notificationService: NotificationService,private datePipe: DatePipe,){}
@@ -84,16 +84,6 @@ export class EmployeesComponent implements OnInit, OnDestroy{
       }
     )
   }
-
-  findLastMetric(metrics: MetricModel[]): MetricModel {
-      let metricWithValues = metrics.filter(m => m.physicalScore !== null)
-      let latest = metricWithValues.reduce(function (r, a) {
-        return r.createdAt > a.createdAt ? r : a;
-      });
-      console.log(latest)
-      return latest;
-  }
-
   handlePageEvent(e: PageEvent) {
     console.log(e)
     this.pageIndex = e.pageIndex;

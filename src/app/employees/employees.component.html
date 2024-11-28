@@ -44,28 +44,6 @@
         <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="lastPhysicalMetric">
-        <th mat-header-cell *matHeaderCellDef> Last Physical Metric </th>
-        <td mat-cell *matCellDef="let element">
-          @if(element.metrics.length > 0){
-            {{findLastMetric(element.metrics).physicalScore}}%
-          }@else{
-            -
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="lastMentalMetric">
-        <th mat-header-cell *matHeaderCellDef> Last Mental Metric </th>
-        <td mat-cell *matCellDef="let element">
-          @if(element.metrics.length > 0){
-            {{findLastMetric(element.metrics).mentalScore}}%
-          }@else{
-            -
-          }
-        </td>
-      </ng-container>
-
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element; let i = index">
