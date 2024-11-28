@@ -7,6 +7,7 @@ import {  map } from 'rxjs';
 import {  delay } from 'rxjs/operators';
 import { SosEvent } from '../models/sos-event.model';
 import { PassoutEvent } from '../models/passout-event.model';
+import { Overall } from '../models/overall.model';
 
 
 @Injectable({
@@ -61,6 +62,12 @@ export class ApiService {
 
   getUsers() {
     return this.http.get<Result<UserModel[]>>(environment.baseUrl + 'api/user').pipe(
+      map(res => res.data)
+    );
+  }
+
+  getOverall() {
+    return this.http.get<Result<Overall>>(environment.baseUrl + 'api/overall').pipe(
       map(res => res.data)
     );
   }

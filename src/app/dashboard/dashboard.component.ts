@@ -31,14 +31,14 @@ export class DashboardComponent implements OnInit {
   employeeListCritical: EmployeeModel[]=[];
   employeeListNormal: EmployeeModel[]=[];
   // dataChart: ChartData[] = [];
-  // avgPhysicalChart: Data[] = [{
-  //   name:"Avg. Physical Data",
-  //   value:0
-  // }];
-  // avgMentalChart: Data[] = [{
-  //   name:"Avg. Mental Data",
-  //   value:0
-  // }];
+  avgPhysicalChart: Data[] = [{
+    name:"Avg. Physical Data",
+    value:0
+  }];
+  avgMentalChart: Data[] = [{
+    name:"Avg. Mental Data",
+    value:0
+  }];
   loading: boolean;
   below = LegendPosition.Below;
   //mentalScoreSum: number = 0;
@@ -62,6 +62,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadEmployees();
+    this.loadAverage();
   }
 
 
@@ -102,6 +103,24 @@ export class DashboardComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  loadAverage(){
+    this.apiService.getOverall().subscribe(
+      res => {
+        if(res.avgMentalScore && res.avgMentalScore){
+          this.avgMentalChart[0].value = (10 - res.avgMentalScore) *10;
+          this.avgPhysicalChart[0].value = (10-res.avgPhysicalScore) * 10;
+        }else{
+          this.avgMentalChart[0].value = 0;
+          this.avgPhysicalChart[0].value = 0;
+        }
+
+      },
+      err => {
+
+      }
+    )
   }
 
   openDashboardDialog(employee: EmployeeModel,latestMetric: MetricModel){
