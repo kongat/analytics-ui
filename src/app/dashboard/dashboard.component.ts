@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserModel } from '../core/models/user.model';
 import { AuthService } from '../core/services/auth.service';
 import { ApiService } from '../core/services/api.service';
@@ -15,6 +15,7 @@ import { DashboardDialogComponent } from './dashboard-dialog/dashboard-dialog.co
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Overall } from '../core/models/overall.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
   displayedColumns: string[] = ['firstName','lastName','status','healthStatus','metricDate',];
   employeeList: EmployeeModel[];
@@ -56,13 +57,31 @@ export class DashboardComponent implements OnInit {
     selectable: true,
     group: ScaleType.Linear,
   };
+  intervalId: any;
+  avgResponse: Overall;
 
   constructor(private apiService: ApiService,public dialog: MatDialog) {
+  }
+
+  ngOnDestroy(): void {
+      // Clear the interval when the component is destroyed
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
   }
 
   ngOnInit(): void {
     this.loadEmployees();
     this.loadAverage();
+
+    this.intervalId = setInterval(() => {
+      this.employeeListCritical = [];
+      this.employeeListNormal = [];
+      this.employeeListWarning = [];
+      this.loadEmployees();
+      this.loadAverage();
+
+    }, 60000); // 60000ms = 1 minute
   }
 
 
@@ -76,12 +95,13 @@ export class DashboardComponent implements OnInit {
           e =>{
             if (e.metrics.length > 0){
               let metricWithValues = e.metrics.filter(m => m.physicalScore !== null)
-              console.log(metricWithValues)
+
               if (metricWithValues.length > 0){
                 let latest = metricWithValues.reduce(function (r, a) {
                   return r.createdAt > a.createdAt ? r : a;
                 });
                 if (latest.physicalScore <= 6){
+                  console.log(latest.physicalScore)
                   this.employeeListNormal.push(e)
                 }else if (latest.physicalScore <= 8){
                   this.employeeListWarning.push(e)
@@ -108,6 +128,7 @@ export class DashboardComponent implements OnInit {
   loadAverage(){
     this.apiService.getOverall().subscribe(
       res => {
+        this.avgResponse = res
         if(res.avgMentalScore && res.avgMentalScore){
           this.avgMentalChart[0].value = (10 - res.avgMentalScore) *10;
           this.avgPhysicalChart[0].value = (10-res.avgPhysicalScore) * 10;
@@ -170,14 +191,6 @@ export class DashboardComponent implements OnInit {
     //let test = this.dataChart
     //test[0].series[0].value =10;
     //this.dataChart = [...test]
-  }
-
-  findLastMetricAvg(metrics: MetricModel[]): number {
-    let metricWithValues = metrics.filter(m =>  m.physicalScore !== null)
-    let latest = metricWithValues.reduce(function (r, a) {
-      return r.createdAt > a.createdAt ? r : a;
-    });
-    return Math.round(latest.mentalScore + latest.physicalScore)/2;
   }
 
   findLastMetric(metrics: MetricModel[]): MetricModel {
