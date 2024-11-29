@@ -13,6 +13,80 @@
         <mat-card-content style="height: 100%;">
           <div  style="height: 100%;" >
             <mat-tab-group>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div class="d-flex">
+                    <span class="normal"></span>
+                    <span>Normal</span>
+                  </div>
+                  <span>{{employeeListNormal.length}} Employee(s)</span>
+                </ng-template>
+                <table mat-table [dataSource]="employeeListNormal" class="mat-elevation-z8 mt-4">
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef> First Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <mat-chip [ngClass]="element.status == 'ACTIVE' ? 'active' : 'offline'">{{element.status}}</mat-chip>
+
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="healthStatus">
+                    <th mat-header-cell *matHeaderCellDef>Health Status </th>
+                    <td mat-cell *matCellDef="let element">
+                      Normal
+
+                    </td>
+                  </ng-container>
+                  <!-- <ng-container matColumnDef="room">
+                    <th mat-header-cell *matHeaderCellDef>Room</th>
+                    <td mat-cell *matCellDef="let element">
+                        Room 3
+                    </td>
+                  </ng-container> -->
+                  <ng-container matColumnDef="metricDate">
+                    <th mat-header-cell *matHeaderCellDef>Last Metric Date</th>
+                    <td mat-cell *matCellDef="let element">
+                       {{findLastMetric(element.metrics).createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}
+                    </td>
+                  </ng-container>
+                  <!-- <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element">
+
+
+                      <button mat-mini-fab matTooltip="View" color="primary" (click)="openDashboardDialog(element,findLastMetric(element.metrics))">
+                        <mat-icon class="view-icon">info</mat-icon>
+                      </button>
+
+                    </td>
+                  </ng-container> -->
+
+
+
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </mat-tab>
+
               <mat-tab>
                 <ng-template mat-tab-label>
                   <div class="d-flex">
@@ -158,78 +232,7 @@
                 </table>
               </mat-tab>
 
-              <mat-tab>
-                <ng-template mat-tab-label>
-                  <div class="d-flex">
-                    <span class="normal"></span>
-                    <span>Normal</span>
-                  </div>
-                  <span>{{employeeListNormal.length}} Employee(s)</span>
-                </ng-template>
-                <table mat-table [dataSource]="employeeListNormal" class="mat-elevation-z8 mt-4">
 
-                  <!--- Note that these columns can be defined in any order.
-                        The actual rendered columns are set as a property on the row definition" -->
-
-                  <!-- Position Column -->
-                  <ng-container matColumnDef="firstName">
-                    <th mat-header-cell *matHeaderCellDef> First Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-                  </ng-container>
-
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="lastName">
-                    <th mat-header-cell *matHeaderCellDef> Last Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let element">
-
-                        <mat-chip [ngClass]="element.status == 'ACTIVE' ? 'active' : 'offline'">{{element.status}}</mat-chip>
-
-                    </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="healthStatus">
-                    <th mat-header-cell *matHeaderCellDef>Health Status </th>
-                    <td mat-cell *matCellDef="let element">
-                      Normal
-
-                    </td>
-                  </ng-container>
-                  <!-- <ng-container matColumnDef="room">
-                    <th mat-header-cell *matHeaderCellDef>Room</th>
-                    <td mat-cell *matCellDef="let element">
-                        Room 3
-                    </td>
-                  </ng-container> -->
-                  <ng-container matColumnDef="metricDate">
-                    <th mat-header-cell *matHeaderCellDef>Last Metric Date</th>
-                    <td mat-cell *matCellDef="let element">
-                       {{findLastMetric(element.metrics).createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}
-                    </td>
-                  </ng-container>
-                  <!-- <ng-container matColumnDef="view">
-                    <th mat-header-cell *matHeaderCellDef>  </th>
-                    <td mat-cell *matCellDef="let element">
-
-
-                      <button mat-mini-fab matTooltip="View" color="primary" (click)="openDashboardDialog(element,findLastMetric(element.metrics))">
-                        <mat-icon class="view-icon">info</mat-icon>
-                      </button>
-
-                    </td>
-                  </ng-container> -->
-
-
-
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-              </mat-tab>
             </mat-tab-group>
            <!-- <ngx-charts-bar-horizontal-2d
 

@@ -141,6 +141,7 @@ export class AppComponent implements OnInit, OnDestroy {
     data.value = false;
     this.apiService.updatePassoutEvent(data).subscribe(
       res => {
+        this.notificationService.success('The issue was resolved successfully.');
         this.notificationEvents = this.notificationEvents.filter(e => !(e.data.employeeId === data.employeeId && e.data.createdAt === data.createdAt))
       },
       err => {
@@ -152,6 +153,7 @@ export class AppComponent implements OnInit, OnDestroy {
     data.value = false;
     this.apiService.updateSosEvent(data).subscribe(
       res => {
+        this.notificationService.success('The issue was resolved successfully.');
         this.notificationEvents = this.notificationEvents.filter(e => !(e.data.employeeId === data.employeeId && e.data.createdAt === data.createdAt))
       },
       err => {
