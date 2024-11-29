@@ -33,7 +33,7 @@ export class EmployeeDialogComponent implements OnInit{
     userId: null,
     emergency: null
   };
-  genders: string[] = ['MALE','FEMALE','OTHER'];
+  genders: string[] = ['MALE','FEMALE'];
   availableUsers: UserModel[]
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:{employee: EmployeeModel,usersEmployeeRole: UserModel[]}, private dialogRef: MatDialogRef<EmployeeDialogComponent >){}

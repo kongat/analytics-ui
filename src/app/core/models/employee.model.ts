@@ -6,7 +6,7 @@ export interface EmployeeModel {
   firstName: string;
   lastName: string;
   birthDate: string;
-  gender: 'MALE' | 'FEMALE'| 'OTHER';
+  gender: 'MALE' | 'FEMALE';
   status: 'ACTIVE' | 'OFFLINE';
   metrics: MetricModel[]
   userId: string;
