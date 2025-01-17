@@ -90,26 +90,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.apiService.getEmployees().subscribe(
       res => {
+        console.log(res)
         this.loading = false;
         this.employeeList = res;
         res.map(
           e =>{
             if (e.metrics.length > 0){
-              let metricWithValues = e.metrics.filter(m => m.physicalScore !== null)
 
-              if (metricWithValues.length > 0){
-                let latest = metricWithValues.reduce(function (r, a) {
-                  return r.createdAt > a.createdAt ? r : a;
-                });
-                if (latest.physicalScore <= 6){
-                  console.log(latest.physicalScore)
-                  this.employeeListNormal.push(e)
-                }else if (latest.physicalScore <= 8){
-                  this.employeeListWarning.push(e)
-                }else{
-                  this.employeeListCritical.push(e)
-                }
+              let latest = this.findLastMetric(e.metrics);
+              if (latest.physicalScore <= 6){
+                this.employeeListNormal.push(e)
+              }else if (latest.physicalScore <= 8){
+                this.employeeListWarning.push(e)
+              }else{
+                this.employeeListCritical.push(e)
               }
+
+              // let metricWithValues = e.metrics.filter(m => m.physicalScore !== null)
+
+              // if (metricWithValues.length > 0){
+              //   let latest = metricWithValues.reduce(function (r, a) {
+              //     return r.createdAt > a.createdAt ? r : a;
+              //   });
+              //   if (latest.physicalScore <= 6){
+              //     console.log(latest.physicalScore)
+              //     this.employeeListNormal.push(e)
+              //   }else if (latest.physicalScore <= 8){
+              //     this.employeeListWarning.push(e)
+              //   }else{
+              //     this.employeeListCritical.push(e)
+              //   }
+              // }
 
             }
           }
@@ -195,10 +206,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   findLastMetric(metrics: MetricModel[]): MetricModel {
-    let metricWithValues = metrics.filter(m => m.physicalScore !== null)
-    let latest = metricWithValues.reduce(function (r, a) {
-      return r.createdAt > a.createdAt ? r : a;
-    });
+    let latest = metrics[0];
     return latest;
   }
 }
