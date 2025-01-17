@@ -81,7 +81,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.loadEmployees();
       this.loadAverage();
 
-    }, 45000); // 60000ms = 1 minute
+    }, 600000); // 60000ms = 1 minute
+    console.log('refresh')
   }
 
 
